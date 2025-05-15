@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=3 uid="uid://ovx0hu0mgfb"]
+
+[ext_resource type="Texture2D" uid="uid://dko6kevwc82a1" path="res://32x32white.png" id="1_80nbo"]
+[ext_resource type="Script" uid="uid://q3o2c2mswmh3" path="res://player.gd" id="1_e2o6t"]
+[ext_resource type="Script" uid="uid://d4kx0noulbm6o" path="res://enemy.gd" id="3_feb5d"]
+[ext_resource type="Script" uid="uid://bv0hfmm4khf8o" path="res://death_zone.gd" id="4_fc0e3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e2o6t"]
+size = Vector2(37, 33)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_e2o6t"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7jktm"]
+size = Vector2(59, 877)
+
+[node name="game" type="Node2D"]
+
+[node name="player" type="CharacterBody2D" parent="." groups=["player"]]
+position = Vector2(315, 225)
+script = ExtResource("1_e2o6t")
+
+[node name="Sprite2D" type="Sprite2D" parent="player"]
+texture = ExtResource("1_80nbo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_e2o6t")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("WorldBoundaryShape2D_e2o6t")
+
+[node name="enemy" type="CharacterBody2D" parent="." groups=["enemy"]]
+position = Vector2(1077, 155)
+script = ExtResource("3_feb5d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="enemy"]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_e2o6t")
+
+[node name="Sprite2D" type="Sprite2D" parent="enemy"]
+modulate = Color(1, 0, 0, 1)
+texture = ExtResource("1_80nbo")
+
+[node name="death_zone" type="Area2D" parent="."]
+position = Vector2(-75, 0)
+script = ExtResource("4_fc0e3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="death_zone"]
+position = Vector2(19.5, 428.5)
+shape = SubResource("RectangleShape2D_7jktm")
+
+[node name="enemy_spawner" type="Node2D" parent="."]
+position = Vector2(1205, 0)
+
+[connection signal="body_entered" from="death_zone" to="death_zone" method="_on_body_entered"]

@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dgjm013bhbcoq"]
+
+[ext_resource type="Script" uid="uid://mbkp55ll3ayj" path="res://tadpole.gd" id="1_nomor"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Tadpole" type="Node2D" parent="."]
+position = Vector2(78, -69)
+script = ExtResource("1_nomor")
